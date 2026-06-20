@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #151516; font-family: var(--font-geist-sans), sans-serif; }
+button, input { font: inherit; }
+.dashboard-shell {
+  background:
+    radial-gradient(circle at 72% 9%, rgba(143, 96, 151, .34), transparent 31%),
+    radial-gradient(circle at 8% 88%, rgba(78, 139, 164, .40), transparent 34%),
+    linear-gradient(135deg, #171918 0%, #272128 55%, #151516 100%);
+}
+.dashboard-shell::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.16; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E"); }
+.topbar, .bento-board { background: rgba(9,9,10,.92); border:1px solid rgba(255,255,255,.055); box-shadow:0 28px 70px rgba(0,0,0,.28); backdrop-filter:blur(18px); }
+.demo-notice { background:rgba(80,55,82,.72); border:1px solid rgba(229,177,234,.16); backdrop-filter:blur(12px); }
+.surface-card, .hero-card, .bento-board section { background:#29282a; border:1px solid rgba(255,255,255,.045); box-shadow:inset 0 1px rgba(255,255,255,.025); }
+.hero-card { background:linear-gradient(110deg, rgba(66,44,67,.95), rgba(40,39,42,.98)); }
+.course-card { border:1px solid rgba(255,255,255,.08); box-shadow:0 14px 28px rgba(0,0,0,.12); }
+.course-card::after { content:""; position:absolute; inset:0; border-radius:inherit; border:1px solid rgba(240,178,244,.32); opacity:0; transition:opacity .2s ease; pointer-events:none; }
+.course-card:hover::after { opacity:1; }
+.course-0 { background:linear-gradient(135deg,#906f91,#735871); }
+.course-1 { background:linear-gradient(135deg,#8581a9,#686788); }
+.course-2 { background:linear-gradient(135deg,#6f798a,#4f5967); }
+.course-3 { background:linear-gradient(135deg,#806884,#625267); }
+.activity-0 { background:#343136; }
+.activity-1 { background:#58465b; }
+.activity-2 { background:#805f84; }
+.activity-3 { background:#b17ab6; }
+.activity-4 { background:#dda0e3; box-shadow:0 0 10px rgba(221,160,227,.28); }
+@media (min-width:768px){ .app-sidebar { box-shadow:0 25px 65px rgba(0,0,0,.35); } }
+@media (max-width:640px){ .bento-board { border-radius:22px; padding:12px; } .course-card { min-height: 224px; height: auto; } }
+@media (prefers-reduced-motion:reduce){ *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
+
+@theme {
+  --color-background: #08090c;
+  --color-foreground: #f4f4f5;
+  --color-card-bg: #111218;
+  --color-card-border: #1d1e26;
+  --color-accent-purple: #a78bfa;
+  --color-accent-indigo: #6366f1;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #08090c;
+  --foreground: #f4f4f5;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(17, 18, 24, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Subtle grain/noise overlay (simplified to prevent Turbopack parser crash) */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.015;
+  z-index: 9999;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #08090c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d1e26;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa;
+}
+
+/* Custom gradient background glow objects */
+.glow-spot-1 {
+  position: fixed;
+  top: -10%;
+  right: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.08) 0%, rgba(99, 102, 241, 0.03) 50%, rgba(0, 0, 0, 0) 100%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.glow-spot-2 {
+  position: fixed;
+  bottom: -10%;
+  left: -5%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, rgba(167, 139, 250, 0.02) 60%, rgba(0, 0, 0, 0) 100%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(50px);
 }
