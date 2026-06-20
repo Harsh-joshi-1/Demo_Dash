@@ -2,9 +2,11 @@
 
 A high-fidelity, futuristic Student Dashboard prototype featuring a Bento Grid layout in a dark mode theme, built using Next.js App Router, Tailwind CSS, Framer Motion, and Supabase.
 
+![Dashboard Preview](public/dashboard-preview.png)
+
 ## Deployed URL & Source Repository
-- **GitHub Repository**: [https://github.com/example/student-dashboard](https://github.com/example/student-dashboard) *(Placeholder or user repository)*
-- **Live Vercel Deployment**: [https://student-dashboard-nextgen.vercel.app](https://student-dashboard-nextgen.vercel.app) *(Placeholder or user deployment)*
+- **GitHub Repository**: [https://github.com/Harsh-joshi-1/Demo_Dash](https://github.com/Harsh-joshi-1/Demo_Dash)
+- **Live Vercel Deployment**: [https://demo-dash-phi.vercel.app/](https://demo-dash-phi.vercel.app/)
 
 ---
 
